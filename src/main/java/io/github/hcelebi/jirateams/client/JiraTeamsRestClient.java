@@ -30,7 +30,7 @@ public class JiraTeamsRestClient {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpResponse<String> response = client.send(HttpRequest.newBuilder()
-                    .uri(URI.create(baseUri + "/gateway/api/public/teams/v1/org/" + orgId + "/teams/" + teamId))
+                    .uri(URI.create(baseUri + "/teams/v1/org/" + orgId + "/teams/" + teamId))
                     .header("Authorization", "Basic " + token)
                     .header("Content-Type", "application/json")
                     .GET()
@@ -46,7 +46,7 @@ public class JiraTeamsRestClient {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpResponse<String> response = client.send(HttpRequest.newBuilder()
-                    .uri(URI.create(baseUri + "/gateway/api/public/teams/v1/org/" + orgId + "/teams/" + teamId + "/members"))
+                    .uri(URI.create(baseUri + "/teams/v1/org/" + orgId + "/teams/" + teamId + "/members"))
                     .header("Authorization", "Basic " + token)
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString("")))
