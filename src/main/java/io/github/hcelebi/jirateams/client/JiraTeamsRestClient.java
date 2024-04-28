@@ -49,7 +49,7 @@ public class JiraTeamsRestClient {
                     .uri(URI.create(baseUri + "/teams/v1/org/" + orgId + "/teams/" + teamId + "/members"))
                     .header("Authorization", "Basic " + token)
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString("")))
+                    .POST(HttpRequest.BodyPublishers.noBody())
                     .build(), BodyHandlers.ofString());
             return objectMapper.readValue(response.body(), MemberResponse.class);
         } catch (IOException | InterruptedException e) {
