@@ -1,6 +1,7 @@
 package io.github.hcelebi.jirateams.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.hcelebi.jirateams.domain.request.GetMembersRequest;
 import io.github.hcelebi.jirateams.domain.response.MemberResponse;
 import io.github.hcelebi.jirateams.domain.response.Team;
 import io.github.hcelebi.jirateams.exception.JiraTeamsRunTimeException;
@@ -42,14 +43,14 @@ public class JiraTeamsRestClient {
         }
     }
 
-    public MemberResponse getMembers(String teamId) {
+    public MemberResponse getMembers(GetMembersRequest getMembersRequest) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             HttpResponse<String> response = client.send(HttpRequest.newBuilder()
-                    .uri(URI.create(baseUri + "/teams/v1/org/" + orgId + "/teams/" + teamId + "/members"))
+                    .uri(URI.create(baseUri + "/teams/v1/org/" + orgId + "/teams/" + getMembersRequest.getTeamId() + "/members"))
                     .header("Authorization", "Basic " + token)
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(getMembersRequest)))
                     .build(), BodyHandlers.ofString());
             return objectMapper.readValue(response.body(), MemberResponse.class);
         } catch (IOException | InterruptedException e) {
